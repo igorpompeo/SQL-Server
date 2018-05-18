@@ -36,18 +36,26 @@ e realize um acréscimo no salário dos professores utilizando a primeira
 proporção para professores mestres e a segunda proporção para 
 professores doutores.*/
 
-CREATE PROCEDURE deposita (@valor1 FLOAT, @valor2 FLOAT) AS
-BEGIN
-	IF Professor.titulo = 'Graduado' THEN
-		Professor.salario = Professor.salario * @valor1;
-		INSERT INTO Professor.salario VALUE (Professor.salario);
-	END IF
-	IF Professor.titulo = 'Doutor' THEN
-		Professor.salario = Professor.salario * @valor2;
-		INSERT INTO Professor.salario VALUE (Professor.salario);
-	END IF
-END;
-GO
+create procedure aumento (@valor1 float, @valor2 float) 
+@nome rowtype Professor.nome = Professor.nome, 
+@cidade rowtype Professor.cidade = Professor.cidade, 
+@grau rowtype Professor.titulo = Professor.titulo,
+@salario rowtype Professor.salario := Professor.salario
+as
+begin
+set @nome = (select Professor.nome from RA20198778_Igor.Professor where Professor.nome = @nome)
+set @cidade = (select Professor.cidade from RA20198778_Igor.Professor where Professor.cidade = @cidade)
+set @grau = (select Professor.titulo from RA20198778_Igor.Professor where Professor.titulo = @titulo)
+if @grau = 'Graduado' then
+	@salario = @salario * @valor1
+	insert into RA20198778_Igor.Professor (@nome, @cidade, @grau, @salario)
+end if
+else then
+	@salario = @salario * @valor2
+	insert into RA20198778_Igor.Professor (@nome, @cidade, @grau, @salairo)
+end else
+end;
+go
 	
 /*Crie um procedimento que receba o nome de um curso e remova todas as 
 disciplinas deste curso.*/
