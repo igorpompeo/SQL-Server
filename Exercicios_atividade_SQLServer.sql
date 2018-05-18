@@ -3,6 +3,14 @@ horária total de suas disciplinas.*/
 
 CREATE OR REPLACE FUNCTION htotal @Nome VARCHAR(100) AS
 BEGIN
+	/*
+	DECLARE @RESULT INT;
+    set @RESULT =  (select SUM (Disciplina.carga) from Oferecimento 
+    	inner join Professor on Oferecimento.prof_cod = Professor.prof_cod
+    	inner join Disciplina on Oferecimento.disc_cod = Disciplina.disc_cod 
+	where Professor.nome = @Nome);
+    Return @RESULT;
+    */
 	SELECT prof_cod, disc_cod FROM Oferecimento
 		INNER JOIN Professor ON
 			Oferecimento.prof_cod = Professor.prof_cod
