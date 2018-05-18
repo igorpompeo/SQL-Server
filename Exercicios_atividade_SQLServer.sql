@@ -62,11 +62,8 @@ disciplinas deste curso.*/
 
 CREATE PROCEDURE deleta @Nome VARCHAR(50) AS
 BEGIN
-	SELECT curso_cod, disc_cod FROM Oferecimento
-		INNER JOIN Curso ON
-			Oferecimento.curso_cod = Curso.curso_cod
-		INNER JOIN Disciplinas ON
-			Oferecimento.disc_cod = Disciplina.disc_cod
-		DELETE FROM Disciplina WHERE Curso.area = Disciplina.area;
+	delete Curso.curso_cod from RA20198778_Igor.Oferecimento 
+    	inner join RA20198778_Igor.Disciplina on Oferecimento.disc_cod = RA20198778_Igor.Disciplina.disc_cod 
+	where RA20198778_Igor.Curso.nome = @Nome
 END;
 GO
