@@ -1,36 +1,33 @@
 /*Crie uma função que receba o nome de um professor e retorne a carga 
 horária total de suas disciplinas.*/
 
-CREATE OR REPLACE FUNCTION htotal @Nome VARCHAR(100) AS
-BEGIN
-	/*
-	DECLARE @RESULT INT;
-    set @RESULT =  (select SUM (Disciplina.carga) from Oferecimento 
-    	inner join Professor on Oferecimento.prof_cod = Professor.prof_cod
-    	inner join Disciplina on Oferecimento.disc_cod = Disciplina.disc_cod 
-	where Professor.nome = @Nome);
-    Return @RESULT;
-    */
-	SELECT prof_cod, disc_cod FROM Oferecimento
-		INNER JOIN Professor ON
-			Oferecimento.prof_cod = Professor.prof_cod
-		INNER JOIN Disciplina ON
-			Oferecimento.disc_cod = Disciplina.disc_cod
-	RETURN SUM(Disciplina.carga);
+CREATE OR ALTER FUNCTION htotal (@Nome VARCHAR(100))
+RETURNS INT
+BEGIN	
+	DECLARE @result INT;
+	SET @result = (select SUM (RA20198778_Igor.Disciplina.carga) from RA20198778_Igor.Oferecimento 
+    	inner join RA20198778_Igor.Professor on RA20198778_Igor.Oferecimento.prof_cod = RA20198778_Igor.Professor.prof_cod
+    	inner join RA20198778_Igor.Disciplina on Oferecimento.disc_cod = RA20198778_Igor.Disciplina.disc_cod 
+	where RA20198778_Igor.Professor.nome = @Nome)
+	RETURN @result;
 END;
 GO
+
+select nome from RA20198778_Igor.Professor
+select dbo.htotal('Flavia Oliveira') AS Total;
 
 /*Crie uma função que receba o nome de um professor e retorne o número 
 de disciplinas lecionadas por esse professor.*/
 
-CREATE OR REPLACE FUNCTION leciona @Nome VARCHAR(100) AS
+CREATE OR ALTER FUNCTION leciona (@Nome VARCHAR(100))
+RETURNS INT
 BEGIN
-	SELECT prof_cod, disc_cod FROM Oferecimento
-		INNER JOIN Professor ON
-			Oferecimento.prof_cod = Professor.prof_cod
-		INNER JOIN Disciplinas ON
-			Oferecimento.disc_cod = Disciplina.disc_cod
-		RETURN COUNT(Oferecimento.disc_cod);
+DECLARE @result INT;
+	SET @result = (select count(RA20198778_Igor.Oferecimento.disc_cod) from RA20198778_Igor.Oferecimento
+	inner join RA20198778_Igor.Professor on RA20198778_Igor.Oferecimento.prof_cod = RA20198778_Igor.Professor.prof_cod
+	inner join RA20198778_Igor.Disciplina on RA20198778_Igor.Oferecimento.disc_cod = RA20198778_Igor.Disciplina.disc_cod
+	where RA20198778_Igor.Professor.nome = @Nome)
+		RETURN @result;
 END;
 GO
 
